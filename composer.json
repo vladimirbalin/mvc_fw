@@ -1,0 +1,15 @@
+{
+    "name": "vladimirb/mvc.fw",
+    "authors": [
+        {
+            "name": "vladimirB",
+            "email": "vladimirzq@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {}
+}
