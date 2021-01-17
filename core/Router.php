@@ -23,6 +23,10 @@ class Router
         $this->routes['get'][$path] = $callback;
     }
 
+    /**
+     * @param string $path
+     * @param callable|string $callback
+     */
     public function post($path, $callback)
     {
         $this->routes['post'][$path] = $callback;
@@ -51,7 +55,7 @@ class Router
     public function renderView($view, $params = [])
     {
         $layoutContent = $this->layoutContent();
-        $viewContent = $this->renderOnlyView($view, $params);
+        $viewContent = $this->viewContent($view, $params);
         return str_replace('{{content}}', $viewContent, $layoutContent);
     }
 
@@ -69,14 +73,15 @@ class Router
         return ob_get_clean();
     }
 
-    protected function renderOnlyView($view, $params)
+    protected function viewContent($view, $params)
     {
         ob_start();
-        if ($params) {
-            foreach ($params as $key => $value) {
-                $$key = $value;
-            }
-        }
+//        if ($params) {
+//            foreach ($params as $key => $value) {
+//                $$key = $value;
+//            }
+//        }
+        if ($params) extract($params);
         include_once Application::$ROOT_DIR . "/views/$view.php";
         return ob_get_clean();
     }
