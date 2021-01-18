@@ -3,7 +3,7 @@
 
 namespace app\core\form;
 
-
+use Jawira\CaseConverter\Convert;
 use app\core\Model;
 
 class Field
@@ -26,17 +26,15 @@ class Field
     public function __toString()
     {
         return sprintf("
-            <div class='col'>
                 <div class='mb-3'>
                     <label>%s</label>
-                    <input type=%s name='%s' value='%s' class='form-control%s' >
+                    <input type='%s' name='%s' value='%s' class='form-control%s' >
                     <div class='invalid-feedback'>
                         %s
                     </div>
                 </div>
-            </div>
         ",
-            $this->attribute,
+            (new Convert($this->attribute))->fromCamel()->toSentence(),
             $this->type,
             $this->attribute,
             $this->model->{$this->attribute},

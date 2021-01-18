@@ -1,23 +1,41 @@
 <?php use app\core\form\Form; ?>
-<h1>Create an account</h1>
+
 <?php $form = Form::begin('', "post"); ?>
 
 <div class="row">
-    <?php echo $form->field($model, 'firstname'); ?>
-    <?php echo $form->field($model, 'lastname'); ?>
-</div>
-<div class="row">
-    <?php echo $form->field($model, 'email'); ?>
-</div>
-<div class="row">
-    <?php echo $form->field($model, 'password')->passwordField(); ?>
-</div>
-<div class="row">
-    <?php echo $form->field($model, 'passwordConfirm')->passwordField(); ?>
+    <div class="col-6 mx-auto">
+        <div class="card car-body bg-light my-5">
+            <h2 class="m-3 text-center">Create an Account</h2>
+        </div>
+        <div class="row">
+            <div class="col">
+                <?php echo $form->field($model, 'firstname'); ?>
+            </div>
+            <div class="col">
+                <?php echo $form->field($model, 'lastname'); ?>
+            </div>
+        </div>
+        <div class="row">
+            <?php echo $form->field($model, 'email'); ?>
+        </div>
+        <div class="row">
+            <?php echo $form->field($model, 'password')->passwordField(); ?>
+        </div>
+        <div class="row">
+            <?php echo $form->field($model, 'passwordConfirm')->passwordField(); ?>
+        </div>
+        <div class="row">
+            <div class="col ">
+                <button type="submit" class="btn btn-success w-100">Create an account</button>
+            </div>
+            <div class="col pt-2"><p>Alreade have an account? <a href="/login">Login</a></p></div>
+        </div>
+    </div>
 </div>
 
 
-<button type="submit" class="btn btn-primary">Submit</button>
+
+
 <?php Form::end(); ?>
 
 
