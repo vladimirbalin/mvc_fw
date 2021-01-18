@@ -7,7 +7,6 @@ use app\controllers\AuthController;
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
-//$dotenv->required(['DB_DSN', 'DB_USER', 'DB_PASSWORD']);
 
 $config = [
     'db' => [

@@ -34,7 +34,7 @@ class Field
                     </div>
                 </div>
         ",
-            (new Convert($this->attribute))->fromCamel()->toSentence(),
+            $this->model->labels()[$this->attribute],
             $this->type,
             $this->attribute,
             $this->model->{$this->attribute},

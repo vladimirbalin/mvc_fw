@@ -17,6 +17,11 @@ class Database
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
+    public static function prepare($sql)
+    {
+        return Application::$app->db->pdo->prepare($sql);
+    }
+
     public function applyMigrations()
     {
         $this->createMigrationsTable();

@@ -12,7 +12,6 @@
         }
     },
     "require": {
-        "vlucas/phpdotenv": "^5.2",
-        "jawira/case-converter": "^3.4"
+        "vlucas/phpdotenv": "^5.2"
     }
 }
