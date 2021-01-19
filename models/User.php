@@ -43,12 +43,12 @@ class User extends ActiveRecord
         return 'users';
     }
 
-    public function labels()
+    public function labels() :array
     {
         return [
             'firstname' => 'First name',
             'lastname' => 'Last name',
-            'email' => 'Your E-mail',
+            'email' => 'E-mail',
             'password' => 'Password',
             'passwordConfirm' => 'Confirm password',
         ];

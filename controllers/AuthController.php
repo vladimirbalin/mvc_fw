@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
 use app\models\User;
@@ -12,7 +13,7 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        if($request->isPost()){
+        if ($request->isPost()) {
             return 'Handle submitted data login page';
         }
         return $this->render('login');
@@ -20,16 +21,17 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $User = new User();
+        $userModel = new User();
 
-        if($request->isPost()){
-            $User->loadData($request->getBody());
-            if($User->validate() && $User->save()){
-                return 'Success';
+        if ($request->isPost()) {
+            $userModel->loadData($request->getBody());
+            if ($userModel->validate() && $userModel->save()) {
+                Application::$app->session->setFlash('success', 'Registration completed successfully');
+                Application::$app->response->redirect('/');
             }
-            return $this->render('register', ['model' => $User]);
+            return $this->render('register', ['model' => $userModel]);
         }
 
-        return $this->render('register', ['model' => $User]);
+        return $this->render('register', ['model' => $userModel]);
     }
 }

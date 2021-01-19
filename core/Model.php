@@ -25,6 +25,18 @@ abstract class Model
 
     abstract public function rules(): array;
 
+    public function labels(): array
+    {
+    }
+    public function attributes(): array
+    {
+    }
+
+    public function getLabel($attribute)
+    {
+        return $this->labels()[$attribute] ?? $attribute;
+    }
+
     public function validate()
     {
         foreach ($this->rules() as $attribute => $rules) {
@@ -49,6 +61,7 @@ abstract class Model
                     $this->addError($attribute, self::RULE_MIN, $rule);
                 }
                 if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}) {
+                    $rule['match'] = $this->getLabel($rule['match']);
                     $this->addError($attribute, self::RULE_MATCH, $rule);
                 }
                 if ($ruleName === self::RULE_UNIQUE) {
@@ -61,7 +74,7 @@ abstract class Model
                     $stmt->execute();
                     $record = $stmt->fetchObject();
                     if ($record) {
-                        $this->addError($attribute, self::RULE_UNIQUE, ['unique' => $attribute]);
+                        $this->addError($attribute, self::RULE_UNIQUE, [self::RULE_UNIQUE => $this->getLabel($attribute)]);
                     }
                 }
             }
@@ -86,7 +99,7 @@ abstract class Model
             self::RULE_MIN => "Min length of this field must be {min}",
             self::RULE_MAX => "Max length of this field must be {max}",
             self::RULE_MATCH => "This field must be the same as {match}",
-            self::RULE_UNIQUE => "This {unique} already exists"
+            self::RULE_UNIQUE => "Record with this {unique} already exists"
         ];
     }
 
