@@ -35,15 +35,25 @@ use app\core\Application;
                 </li>
 
             </ul>
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Register</a>
-                </li>
+            <?php if (!$_SESSION['user']): ?>
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                </ul>
+            <?php else: ?>
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link text-light"
+                       href="/users/<?= Application::$app->user->id ?>">Hello, <?= Application::$app->user->firstname ?></a>
+                </div>
+                <div class="navbar-nav">
+                    <a class="nav-link" href="/logout">Log out</a>
+                </div>
+            <?php endif; ?>
 
-            </ul>
         </div>
     </div>
 </nav>

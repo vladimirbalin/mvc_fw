@@ -38,12 +38,12 @@ class User extends ActiveRecord
         ];
     }
 
-    public function tableName(): string
+    public static function tableName(): string
     {
         return 'users';
     }
 
-    public function labels() :array
+    public function labels(): array
     {
         return [
             'firstname' => 'First name',
@@ -57,5 +57,15 @@ class User extends ActiveRecord
     public function attributes(): array
     {
         return ['firstname', 'lastname', 'email', 'password', 'status'];
+    }
+
+    public function primaryKey(): string
+    {
+        return 'id';
+    }
+
+    public function getDisplayName(): string
+    {
+        return ucwords("$this->firstname $this->lastname");
     }
 }

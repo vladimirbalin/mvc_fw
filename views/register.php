@@ -1,4 +1,12 @@
-<?php use app\core\form\Form; ?>
+<?php
+
+use app\core\form\Form;
+use app\models\User;
+
+/**
+ * @var $model User
+ */
+?>
 
 <?php $form = Form::begin('', "post"); ?>
 
@@ -32,8 +40,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <?php Form::end(); ?>

@@ -3,7 +3,6 @@
 
 namespace app\core\form;
 
-use Jawira\CaseConverter\Convert;
 use app\core\Model;
 
 class Field

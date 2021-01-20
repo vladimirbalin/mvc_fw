@@ -42,4 +42,25 @@ class Session
         }
         $_SESSION[self::FLASH_KEY] = $flashMessages;
     }
+
+    public function set(string $string, $primaryValue)
+    {
+        if (isset($primaryValue, $string)) {
+            $_SESSION[$string] = $primaryValue;
+        }
+    }
+
+    public function unset($string)
+    {
+        if (isset($string)) {
+            unset($_SESSION[$string]);
+        }
+    }
+
+    public function get($string)
+    {
+        if (isset($string, $_SESSION[$string])) {
+            return $_SESSION[$string];
+        }
+    }
 }

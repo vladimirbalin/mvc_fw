@@ -2,8 +2,11 @@
 
 namespace app\core;
 
+use app\models\User;
+
 class Application
 {
+    public ?User $user = null;
     public static string $ROOT_DIR;
     public Router $router;
     public Request $request;
@@ -12,7 +15,6 @@ class Application
     public Controller $controller;
     public Session $session;
     public static Application $app;
-
 
     public function __construct($rootPath, array $config)
     {
@@ -23,6 +25,10 @@ class Application
         $this->router = new Router($this->request, $this->response);
         $this->session = new Session();
         $this->db = new Database($config['db']);
+
+        if ($this->session->get('user')) {
+            $this->user = $_SESSION['user'];
+        }
     }
 
     public function run()
@@ -45,4 +51,23 @@ class Application
     {
         $this->controller = $controller;
     }
+
+    public function login(User $user)
+    {
+        $this->user = $user;
+//        $primaryKey = $user->primaryKey();
+//        $primaryValue = $user->{$primaryKey};
+        $this->session->set('user', $user);
+    }
+
+    public function logout()
+    {
+        $this->session->unset('user');
+    }
+
+    public static function isGuest()
+    {
+        return !self::$app->user;
+    }
+
 }
