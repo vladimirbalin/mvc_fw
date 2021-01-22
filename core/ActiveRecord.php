@@ -8,7 +8,7 @@ abstract class ActiveRecord extends Model
 {
     abstract public static function tableName(): string;
 
-    abstract public function primaryKey(): string;
+    abstract public static function primaryKey(): string;
 
     public function save()
     {

@@ -6,13 +6,14 @@ use app\models\User;
 
 class Application
 {
-    public ?User $user = null;
+    public string $layout = 'main';
     public static string $ROOT_DIR;
+    public ?User $user;
     public Router $router;
     public Request $request;
     public Response $response;
     public Database $db;
-    public Controller $controller;
+    public ?Controller $controller = null;
     public Session $session;
     public static Application $app;
 
@@ -26,14 +27,25 @@ class Application
         $this->session = new Session();
         $this->db = new Database($config['db']);
 
-        if ($this->session->get('user')) {
-            $this->user = $_SESSION['user'];
+        $primaryValue = $this->session->get('user');
+        if ($primaryValue = $this->session->get('user')) {
+            $primaryKey = User::primaryKey();
+            $this->user = User::findOne([$primaryKey => $primaryValue]);
+        } else {
+            $this->user = null;
         }
+//        var_dump($this);
+
     }
 
     public function run()
     {
-        echo $this->router->resolve();
+        try {
+            echo $this->router->resolve();
+        } catch (\Exception $e) {
+            $this->response->setStatusCode($e->getCode());
+            echo $this->router->renderView('_errorPage', ['exception' => $e]);
+        }
     }
 
     /**
@@ -55,13 +67,14 @@ class Application
     public function login(User $user)
     {
         $this->user = $user;
-//        $primaryKey = $user->primaryKey();
-//        $primaryValue = $user->{$primaryKey};
-        $this->session->set('user', $user);
+        $primaryKey = $user->primaryKey();
+        $primaryValue = $user->{$primaryKey};
+        $this->session->set('user', $primaryValue);
     }
 
     public function logout()
     {
+        $this->user = null;
         $this->session->unset('user');
     }
 

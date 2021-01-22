@@ -34,8 +34,9 @@ use app\core\Application;
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
 
+
             </ul>
-            <?php if (!$_SESSION['user']): ?>
+            <?php if (Application::isGuest()): ?>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" href="/login">Login</a>
@@ -46,8 +47,8 @@ use app\core\Application;
                 </ul>
             <?php else: ?>
                 <div class="navbar-nav ms-auto">
-                    <a class="nav-link text-light"
-                       href="/users/<?= Application::$app->user->id ?>">Hello, <?= Application::$app->user->firstname ?></a>
+                    <span class="text-white-50 my-auto">Hello,</span> <a class="nav-link text-white"
+                       href="/profile"> <?= Application::$app->user->firstname ?></a>
                 </div>
                 <div class="navbar-nav">
                     <a class="nav-link" href="/logout">Log out</a>

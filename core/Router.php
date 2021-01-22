@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use app\core\exception\NotFoundException;
+
 class Router
 {
     protected array $routes = [];
@@ -39,17 +41,23 @@ class Router
         $callback = $this->routes[$method][$path] ?? false;
         if ($callback === false) {
             $this->response->setStatusCode(404);
-            return $this->renderView('_404');
+            throw new NotFoundException();
         }
         if (is_string($callback)) {
             return $this->renderView($callback);
         }
         if (is_array($callback)) {
-            Application::$app->controller = new $callback[0]();
-            $callback[0] = Application::$app->controller;
+            /** @var Controller $controller */
+            $controller = new $callback[0]();
+            Application::$app->controller = $controller;
+            $controller->action = $callback[1];
+            $callback[0] = $controller;
+            foreach ($controller->getMiddlewares() as $middleware){
+                $middleware->execute();
+            }
         }
 
-        return call_user_func($callback, $this->request);
+        return call_user_func($callback, $this->request, $this->response);
     }
 
     public function renderView($view, $params = [])
@@ -67,7 +75,11 @@ class Router
 
     protected function layoutContent()
     {
-        $layout = Application::$app->controller->layout;
+        if (Application::$app->controller) {
+            $layout = Application::$app->controller->layout;
+        } else {
+            $layout = Application::$app->layout;
+        }
         ob_start();
         include_once Application::$ROOT_DIR . "/views/layouts/$layout.php";
         return ob_get_clean();
@@ -76,11 +88,6 @@ class Router
     protected function viewContent($view, $params)
     {
         ob_start();
-//        if ($params) {
-//            foreach ($params as $key => $value) {
-//                $$key = $value;
-//            }
-//        }
         if ($params) extract($params);
         include_once Application::$ROOT_DIR . "/views/$view.php";
         return ob_get_clean();

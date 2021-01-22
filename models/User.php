@@ -59,7 +59,7 @@ class User extends ActiveRecord
         return ['firstname', 'lastname', 'email', 'password', 'status'];
     }
 
-    public function primaryKey(): string
+    public static function primaryKey(): string
     {
         return 'id';
     }
