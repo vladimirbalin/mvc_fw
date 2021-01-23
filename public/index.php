@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use app\controllers\PostsController;
 use app\core\Application;
 use app\controllers\SiteController;
 use app\controllers\AuthController;
@@ -28,6 +29,9 @@ $app->router->get('/logout', [AuthController::class, 'logout']);
 $app->router->get('/register', [AuthController::class, 'register']);
 $app->router->post('/register', [AuthController::class, 'register']);
 $app->router->get('/profile', [AuthController::class, 'profile']);
+
+$app->router->get('/posts', [PostsController::class, 'posts']);
+$app->router->get('/posts/show', [PostsController::class, 'show']);
 
 
 $app->run();

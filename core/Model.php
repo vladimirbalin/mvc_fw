@@ -23,10 +23,16 @@ abstract class Model
         }
     }
 
-    abstract public function rules(): array;
+    public function rules(): array
+    {
+    }
 
-    abstract public function labels(): array;
-    public function attributes(): array{
+    public function labels(): array
+    {
+    }
+
+    public function attributes(): array
+    {
 
     }
 
@@ -93,6 +99,7 @@ abstract class Model
     {
         $this->errors[$attribute][] = $message;
     }
+
     public function errorMessages()
     {
         return [

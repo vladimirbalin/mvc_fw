@@ -25,7 +25,7 @@ abstract class ActiveRecord extends Model
         return $statement->execute();
     }
 
-    public static function findOne($where) //["email" => $this->email, "login" => $this->login]
+    private static function find($where) //["email" => $this->email, "login" => $this->login]
     {
         $tableName = static::tableName();
         $conditionsList = array_map(fn($parameter) => "$parameter = :$parameter", array_keys($where));
@@ -36,9 +36,19 @@ abstract class ActiveRecord extends Model
             $statement->bindValue(":$parameter", $value);
         }
         $statement->execute();
+        return $statement;
+    }
+
+    public static function findOne($where)
+    {
+        $statement = self::find($where);
         return $statement->fetchObject(static::class);
     }
 
-
+    public static function findAll($where) // //["email" => $this->email, "login" => $this->login]
+    {
+        $statement = self::find($where);
+        return $statement->fetchAll(\PDO::FETCH_OBJ);
+    }
 
 }

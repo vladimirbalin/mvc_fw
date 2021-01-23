@@ -38,6 +38,7 @@ class Router
     {
         $path = $this->request->getPath();
         $method = $this->request->method();
+        $parameters = $this->request->getParameters();
         $callback = $this->routes[$method][$path] ?? false;
         if ($callback === false) {
             $this->response->setStatusCode(404);
@@ -57,6 +58,6 @@ class Router
             }
         }
 
-        return call_user_func($callback, $this->request, $this->response);
+        return call_user_func($callback, $this->request, $this->response, $parameters);
     }
 }

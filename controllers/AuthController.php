@@ -8,6 +8,7 @@ use app\core\Application;
 use app\core\Controller;
 use app\core\middlewares\AuthMiddleware;
 use app\core\Request;
+use app\core\Response;
 use app\models\LoginForm;
 use app\models\User;
 
@@ -18,27 +19,26 @@ class AuthController extends Controller
         $this->registerMiddleware(new AuthMiddleware(['profile']));
     }
 
-    public function login(Request $request)
+    public function login(Request $request, Response $response)
     {
         $loginModel = new LoginForm();
         if ($request->isPost()) {
             $loginModel->loadData($request->getBody());
             if ($loginModel->validate() && $loginModel->login()) {
                 Application::$app->session->setFlash('success', 'Login successfully');
-                Application::$app->response->redirect('/');
+                $response->redirect('/');
             }
-            return $this->render('login', ['model' => $loginModel]);
         }
         return $this->render('login', ['model' => $loginModel]);
     }
 
-    public function logout()
+    public function logout(Request $request, Response $response)
     {
         Application::$app->logout();
-        Application::$app->response->redirect('/');
+        $response->redirect('/');
     }
 
-    public function register(Request $request)
+    public function register(Request $request, Response $response)
     {
         $userModel = new User();
 
@@ -46,11 +46,9 @@ class AuthController extends Controller
             $userModel->loadData($request->getBody());
             if ($userModel->validate() && $userModel->save()) {
                 Application::$app->session->setFlash('success', 'Registration completed successfully, you can log in now.');
-                Application::$app->response->redirect('/login');
+                $response->redirect('/login');
             }
-//            return $this->render('register', ['model' => $userModel]);
         }
-
         return $this->render('register', ['model' => $userModel]);
     }
 
@@ -58,8 +56,4 @@ class AuthController extends Controller
     {
         return $this->render('profile');
     }
-
-//    public function registerMiddleware(AuthMiddleware $param)
-//    {
-//    }
 }

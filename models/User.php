@@ -18,6 +18,7 @@ class User extends ActiveRecord
     public int $status = self::STATUS_INACTIVE;
     public string $password = '';
     public string $passwordConfirm = '';
+    public array $users = [];
 
 
     public function save()
