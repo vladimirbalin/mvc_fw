@@ -25,11 +25,9 @@ abstract class Model
 
     abstract public function rules(): array;
 
-    public function labels(): array
-    {
-    }
-    public function attributes(): array
-    {
+    abstract public function labels(): array;
+    public function attributes(): array{
+
     }
 
     public function getLabel($attribute)

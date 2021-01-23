@@ -1,14 +1,15 @@
 <?php
 
 use app\core\form\Form;
+use app\core\View;
 use app\models\User;
 
 /**
  * @var $model User
+ * @var $this View
  */
-?>
-
-<?php $form = Form::begin('', "post"); ?>
+$this->title = "Registration";
+$form = Form::begin('', "post"); ?>
 
 <div class="row">
     <div class="col-6 mx-auto">

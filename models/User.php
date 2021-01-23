@@ -63,9 +63,4 @@ class User extends ActiveRecord
     {
         return 'id';
     }
-
-    public function getDisplayName(): string
-    {
-        return ucwords("$this->firstname $this->lastname");
-    }
 }

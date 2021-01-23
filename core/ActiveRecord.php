@@ -22,8 +22,7 @@ abstract class ActiveRecord extends Model
         foreach ($attributes as $attribute) {
             $statement->bindValue(":$attribute", $this->{$attribute});
         }
-        $statement->execute();
-        return true;
+        return $statement->execute();
     }
 
     public static function findOne($where) //["email" => $this->email, "login" => $this->login]

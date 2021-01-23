@@ -45,10 +45,10 @@ class AuthController extends Controller
         if ($request->isPost()) {
             $userModel->loadData($request->getBody());
             if ($userModel->validate() && $userModel->save()) {
-                Application::$app->session->setFlash('success', 'Registration completed successfully');
-                Application::$app->response->redirect('/');
+                Application::$app->session->setFlash('success', 'Registration completed successfully, you can log in now.');
+                Application::$app->response->redirect('/login');
             }
-            return $this->render('register', ['model' => $userModel]);
+//            return $this->render('register', ['model' => $userModel]);
         }
 
         return $this->render('register', ['model' => $userModel]);

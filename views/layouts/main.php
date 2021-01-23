@@ -1,6 +1,9 @@
 <?php
-
+/**
+ * @var $this View
+ */
 use app\core\Application;
+use app\core\View;
 
 ?>
 <!doctype html>
@@ -14,7 +17,7 @@ use app\core\Application;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title><?=$this->title?></title>
 </head>
 <body>
 
@@ -33,8 +36,6 @@ use app\core\Application;
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
-
-
             </ul>
             <?php if (Application::isGuest()): ?>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
@@ -48,7 +49,7 @@ use app\core\Application;
             <?php else: ?>
                 <div class="navbar-nav ms-auto">
                     <span class="text-white-50 my-auto">Hello,</span> <a class="nav-link text-white"
-                       href="/profile"> <?= Application::$app->user->firstname ?></a>
+                                                                         href="/profile"> <?= Application::$app->getDisplayName() ?></a>
                 </div>
                 <div class="navbar-nav">
                     <a class="nav-link" href="/logout">Log out</a>
@@ -64,7 +65,6 @@ use app\core\Application;
     </div>
 <?php endif; ?>
 <div class="container">
-
     {{content}}
 </div>
 <!-- Optional JavaScript; choose one of the two! -->
