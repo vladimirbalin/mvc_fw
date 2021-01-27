@@ -43,7 +43,7 @@ class Application
         try {
             echo $this->router->resolve();
         } catch (\Exception $e) {
-            $this->response->setStatusCode($e->getCode());
+            $this->response->setStatusCode(intval($e->getCode()));
             echo $this->view->renderView('_errorPage', ['exception' => $e]);
         }
     }

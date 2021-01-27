@@ -1,9 +1,10 @@
 <?php
 /**
-* @var $model PostModel
+* @var $model Post
  */
 
-use app\models\PostModel;
+use app\core\Application;
+use app\models\Post;
 $post = $model->post;
 ?>
 
@@ -23,9 +24,9 @@ $post = $model->post;
         <p class="fw-bolder"><?=$post->title?></p>
         <p><?= $post->body ?></p>
 
-        <?php if ($post->user_id == $_SESSION['user_id']): ?>
-            <a href="/posts/edit/<?= $post->post_id ?>" class="btn btn-dark float-start">Edit</a>
-            <form action="/posts/delete/<?=$post->post_id?>" method="post">
+        <?php if ($post->user_id == Application::$app->user->id) : ?>
+            <a href="/posts/update?id=<?= $post->post_id ?>" class="btn btn-dark float-start">Edit</a>
+            <form action="/posts/delete?id=<?=$post->post_id?>" method="post">
                 <input type="submit" value="Delete" class="btn btn-danger float-end">
             </form>
         <?php endif; ?>

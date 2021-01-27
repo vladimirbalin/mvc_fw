@@ -1,9 +1,9 @@
 <?php
 
-use app\models\PostModel;
+use app\models\Post;
 
 /**
- * @var $model PostModel
+ * @var $model Post
  */ ?>
     <div class="d-flex justify-content-around align-items-center my-4">
         <div class="">

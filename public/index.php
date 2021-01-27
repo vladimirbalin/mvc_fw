@@ -30,8 +30,13 @@ $app->router->get('/register', [AuthController::class, 'register']);
 $app->router->post('/register', [AuthController::class, 'register']);
 $app->router->get('/profile', [AuthController::class, 'profile']);
 
-$app->router->get('/posts', [PostsController::class, 'posts']);
-$app->router->get('/posts/show', [PostsController::class, 'show']);
+$app->router->get('/posts', [PostsController::class, 'all']);
+$app->router->get('/posts/show', [PostsController::class, 'exact']);
+$app->router->get('/posts/add', [PostsController::class, 'add']);
+$app->router->post('/posts/add', [PostsController::class, 'add']);
+$app->router->get('/posts/update', [PostsController::class, 'update']);
+$app->router->post('/posts/update', [PostsController::class, 'update']);
+$app->router->post('/posts/delete', [PostsController::class, 'delete']);
 
 
 $app->run();

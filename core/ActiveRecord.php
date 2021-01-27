@@ -18,7 +18,6 @@ abstract class ActiveRecord extends Model
         $values = implode(',', array_map(fn($a) => ":$a", $attributes));
         $statement = Database::prepare("INSERT INTO $tableName ($attributesStr)
                                         VALUES ($values)");
-
         foreach ($attributes as $attribute) {
             $statement->bindValue(":$attribute", $this->{$attribute});
         }

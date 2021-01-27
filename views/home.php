@@ -11,8 +11,10 @@ use app\core\View;
 
 $this->title = 'Home page';
 ?>
-<h1>Home</h1>
-<h3>
-    Welcome, <?= Application::isGuest() ?
-        "Guest" :
-        Application::$app->getDisplayName() ?>!</h3>
+<div class="text-center my-4">
+    <h1>Home</h1>
+    <h3>
+        Welcome, <?= Application::isGuest() ?
+            "Guest" :
+            Application::$app->getDisplayName() ?>!</h3>
+</div>
